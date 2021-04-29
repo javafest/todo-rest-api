@@ -1,6 +1,7 @@
 package therap.javafest.todo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import therap.javafest.todo.domain.Task;
@@ -38,6 +39,21 @@ public class TaskRestController {
         taskService.save(task);
 
         return task;
+    }
+
+    @GetMapping(value = "/{id}")
+    public Task show(@PathVariable int id) {
+
+        return taskService.getById(id);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity update(@PathVariable int id, @RequestBody Task task) {
+        Task existingTask = taskService.getById(id);
+        existingTask.setName(task.getName());
+        taskService.save(existingTask);
+
+        return ResponseEntity.ok().build();
     }
 
     private User getLoggedInUser() {
