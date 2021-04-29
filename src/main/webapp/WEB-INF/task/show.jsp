@@ -47,6 +47,11 @@
                             <i class="fas fa-plus-circle"></i>
                         </button>
                     </div>
+
+                    <div style="margin-top: 5px">
+                        <span class="alert alert-danger" style="display: none"></span>
+                    </div>
+
                 </form>
             </div>
 
@@ -110,6 +115,11 @@
                 ajaxGetAllAction();
             },
             error: function (data) {
+                var response = JSON.parse(data.responseText);
+                console.log(response);
+                var $error = $('.alert:hidden');
+                $error.toggle();
+                $error.text(response.errors[0]);
             }
         });
     }

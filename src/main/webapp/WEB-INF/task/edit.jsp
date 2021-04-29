@@ -35,11 +35,15 @@
                     <div class="mb-3">
                         <div>
                             <input id="task-name"
-                                        type="text"
-                                        name="name"
-                                        class="form-control"
-                                        autofocus="true"/>
+                                   type="text"
+                                   name="name"
+                                   class="form-control"
+                                   autofocus="true"/>
 
+                        </div>
+
+                        <div style="margin-top: 5px">
+                            <span class="alert alert-danger" style="display: none"></span>
                         </div>
                     </div>
 
@@ -87,6 +91,11 @@
                     window.location.replace('http://localhost:8080/task/show');
                 },
                 error: function (data) {
+                    var response = JSON.parse(data.responseText);
+                    console.log(response);
+                    var $error = $('.alert:hidden');
+                    $error.toggle();
+                    $error.text(response.errors[0]);
                 }
             });
         }

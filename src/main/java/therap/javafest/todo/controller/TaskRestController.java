@@ -9,6 +9,7 @@ import therap.javafest.todo.domain.User;
 import therap.javafest.todo.service.TaskService;
 import therap.javafest.todo.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class TaskRestController {
     }
 
     @PostMapping
-    public Task save(@RequestBody Task task) {
+    public Task save(@Valid @RequestBody Task task) {
         User user = getLoggedInUser();
         task.setUser(user);
         taskService.save(task);
@@ -48,7 +49,7 @@ public class TaskRestController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity update(@PathVariable int id, @RequestBody Task task) {
+    public ResponseEntity update(@PathVariable int id, @Valid @RequestBody Task task) {
         Task existingTask = taskService.getById(id);
         existingTask.setName(task.getName());
         taskService.save(existingTask);
