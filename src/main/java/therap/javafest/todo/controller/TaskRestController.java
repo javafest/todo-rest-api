@@ -56,6 +56,13 @@ public class TaskRestController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity delete(@PathVariable int id) {
+        taskService.delete(taskService.getById(id));
+
+        return ResponseEntity.ok().build();
+    }
+
     private User getLoggedInUser() {
         return userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
     }

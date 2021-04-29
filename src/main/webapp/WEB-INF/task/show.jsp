@@ -114,6 +114,22 @@
         });
     }
 
+    function ajaxDeleteAction(id) {
+        if (confirm("Are you sure, you want to delete it?")) {
+            $.ajax({
+                url: '/tasks/' + id,
+                type: 'DELETE',
+                beforeSend: setRequestHeader,
+                success: function () {
+                    ajaxGetAllAction();
+                },
+                error: function () {
+                    alert("Error while deleting!");
+                }
+            });
+        }
+    }
+
     ajaxGetAllAction();
 </script>
 </body>
