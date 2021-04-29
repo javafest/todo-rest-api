@@ -25,7 +25,7 @@
             </div>
 
             <div class="mb-3">
-                <a href="#">Go to task list</a>
+                <a href="/task/show">Go to task list</a>
                 This is a simple TODO Application!
             </div>
         </div>
