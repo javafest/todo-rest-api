@@ -85,6 +85,7 @@
     $('#task-form').submit(function (e) {
         e.preventDefault();
         var data = $(this).serializeArray();
+        $(this).trigger("reset");
 
         ajaxPostAction(JSON.stringify(getFormData(data)));
     });
@@ -96,7 +97,7 @@
             beforeSend: setRequestHeader,
             success: function (data) {
                 destroyTable();
-                populateTable(data);
+                populateTable(data._embedded.taskList);
             },
             error: function () {
                 alert('Couldn\'t fetch data!');
@@ -116,7 +117,6 @@
             },
             error: function (data) {
                 var response = JSON.parse(data.responseText);
-                console.log(response);
                 var $error = $('.alert:hidden');
                 $error.toggle();
                 $error.text(response.errors[0]);

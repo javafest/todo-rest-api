@@ -92,7 +92,6 @@
                 },
                 error: function (data) {
                     var response = JSON.parse(data.responseText);
-                    console.log(response);
                     var $error = $('.alert:hidden');
                     $error.toggle();
                     $error.text(response.errors[0]);
