@@ -91,7 +91,7 @@
 
     function ajaxGetAllAction() {
         $.ajax({
-            url: '/tasks',
+            url: '/api/v1/tasks',
             type: 'GET',
             beforeSend: setRequestHeader,
             success: function (data) {
@@ -106,7 +106,7 @@
 
     function ajaxPostAction(data) {
         $.ajax({
-            url: '/tasks',
+            url: '/api/v1/tasks',
             type: 'POST',
             data: data,
             contentType: 'application/json',
@@ -127,7 +127,7 @@
     function ajaxDeleteAction(id) {
         if (confirm("Are you sure, you want to delete it?")) {
             $.ajax({
-                url: '/tasks/' + id,
+                url: '/api/v1/tasks/' + id,
                 type: 'DELETE',
                 beforeSend: setRequestHeader,
                 success: function () {

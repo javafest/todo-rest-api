@@ -68,7 +68,7 @@
 
         function ajaxGetAction(id) {
             $.ajax({
-                url: '/tasks/' + parseInt(id),
+                url: '/api/v1/tasks/' + parseInt(id),
                 type: 'GET',
                 beforeSend: setRequestHeader,
                 success: function (data) {
@@ -82,7 +82,7 @@
 
         function ajaxUpdateAction(data) {
             $.ajax({
-                url: '/tasks/' + id,
+                url: '/api/v1/tasks/' + id,
                 type: 'PUT',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
