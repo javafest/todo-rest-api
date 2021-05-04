@@ -33,8 +33,9 @@
 
                 <form id="task-form" class="row g-3">
 
-                    <div class="col-auto">
-                        <input type="text"
+                    <div class="col-md-8">
+                        <input id="task-name"
+                               type="text"
                                name="name"
                                class="form-control"
                                placeholder="what to do.."
@@ -42,7 +43,7 @@
 
                     </div>
 
-                    <div class="col-auto">
+                    <div class="col-md-2">
                         <button type="submit" class="btn btn-primary mb-3">
                             <i class="fas fa-plus-circle"></i>
                         </button>
@@ -53,9 +54,39 @@
                     </div>
 
                 </form>
+
+                <div class="row">
+                    <div class="mb-3 offset-md-4">
+                        <c:out value="OR"/>
+                    </div>
+                </div>
+
+                <form id="fileUploadForm" enctype="multipart/form-data" method="POST" class="row g-4">
+
+                    <div class="col-md-8">
+                        <input id="loadFileBtn"
+                               class="form-control"
+                               type="button"
+                               value="Upload a photo"
+                               onclick="document.getElementById('file').click();"/>
+
+                        <input id="file"
+                               type="file"
+                               name="file"
+                               class="form-control"
+                               onChange="ajaxUploadAction()"
+                               style="display: none"/>
+                    </div>
+
+                    <div class="col-md-2" style="display: none">
+                        <button id="convertBtn" class="btn btn-primary">
+                            <i class="fas fa-sync"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 col-md-10">
                 <legend>My tasks</legend>
 
                 <c:if test="${taskList.size() == 0}">
@@ -82,6 +113,10 @@
 </div>
 
 <script>
+    var $convertBtn = $('div:hidden'),
+        $loadFileBtn = $('#loadFileBtn'),
+        taskContent = "";
+
     $('#task-form').submit(function (e) {
         e.preventDefault();
         var data = $(this).serializeArray();
@@ -139,6 +174,36 @@
             });
         }
     }
+
+    function ajaxUploadAction() {
+        var data = new FormData($('#fileUploadForm')[0]);
+        $loadFileBtn.val("Uploading...");
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/api/v1/image",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            beforeSend: setRequestHeader,
+            success: function (data) {
+                taskContent = data;
+                $loadFileBtn.val("Upload Complete!")
+                $convertBtn.show();
+            },
+            error: function () {
+                alert('Error while uploading photo!');
+                $loadFileBtn.val("Upload a photo to detect text");
+            }
+        });
+    }
+
+    $('#convertBtn').click(function (e) {
+        e.preventDefault();
+        $("#task-name").val(taskContent);
+        $loadFileBtn.val("Upload a photo to detect text");
+    });
 
     ajaxGetAllAction();
 </script>
