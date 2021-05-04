@@ -115,7 +115,8 @@
 <script>
     var $convertBtn = $('div:hidden'),
         $loadFileBtn = $('#loadFileBtn'),
-        taskContent = "";
+        taskContent = "",
+        tableData = [];
 
     $('#task-form').submit(function (e) {
         e.preventDefault();
@@ -131,8 +132,9 @@
             type: 'GET',
             beforeSend: setRequestHeader,
             success: function (data) {
+                tableData = data._embedded.taskList;
                 destroyTable();
-                populateTable(data._embedded.taskList);
+                populateTable(tableData);
             },
             error: function () {
                 alert('Couldn\'t fetch data!');
@@ -147,8 +149,10 @@
             data: data,
             contentType: 'application/json',
             beforeSend: setRequestHeader,
-            success: function () {
-                ajaxGetAllAction();
+            success: function (data) {
+                tableData.push(data);
+                destroyTable();
+                populateTable(tableData);
             },
             error: function (data) {
                 var response = JSON.parse(data.responseText);
@@ -166,7 +170,9 @@
                 type: 'DELETE',
                 beforeSend: setRequestHeader,
                 success: function () {
-                    ajaxGetAllAction();
+                    tableData = removeTask(tableData, id);
+                    destroyTable();
+                    populateTable(tableData);
                 },
                 error: function () {
                     alert("Error while deleting!");

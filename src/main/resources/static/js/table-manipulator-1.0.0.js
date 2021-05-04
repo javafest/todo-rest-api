@@ -1,3 +1,9 @@
+function removeTask(taskList, id) {
+    return jQuery.grep(taskList, function (item) {
+        return item.id != id;
+    });
+}
+
 function destroyTable() {
     var body = document.getElementsByTagName('tbody')[0];
     while (body.firstChild) {
