@@ -200,7 +200,7 @@
             },
             error: function () {
                 alert('Error while uploading photo!');
-                $loadFileBtn.val("Upload a photo to detect text");
+                $loadFileBtn.val("Upload a photo");
             }
         });
     }
@@ -208,7 +208,7 @@
     $('#convertBtn').click(function (e) {
         e.preventDefault();
         $("#task-name").val(taskContent);
-        $loadFileBtn.val("Upload a photo to detect text");
+        $loadFileBtn.val("Upload a photo");
     });
 
     ajaxGetAllAction();
